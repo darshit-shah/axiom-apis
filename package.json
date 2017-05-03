@@ -1,6 +1,6 @@
 {
   "name": "axiom-apis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This node module contains wrapper mathods to call Axiom APIs",
   "main": "axiom-apis.js",
   "scripts": {
