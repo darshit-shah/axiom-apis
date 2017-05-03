@@ -1,34 +1,18 @@
-﻿var https = require('https');
+﻿/**
+ * Axiom-apis module.
+ * @module axiom-apis
+ * @see www.npmjs.com/package/axiom-apis
+ */
+var https = require('https');
 module.exports = function() {
+
+
     /**
      * AxiomAPIs is wrapper library to call axiom APIs.
      * @type {Object}
      */
     var AxiomAPIs = {
-        // /**
-        //  * username will be stored in this variable
-        //  * @type {String}
-        //  * @private
-        //  */
-        // user: '',
-        // /**
-        //  * password will be stored in this variable
-        //  * @type {String}
-        //  * @private
-        //  */
-        // pass: '',
-        // /**
-        //  * session id will be stored in this variable
-        //  * @type {String}
-        //  * @private
-        //  */
-        // SessionID: '',
-        // /**
-        //  * AppKey provided from axiom will be stored in this variable
-        //  * @type {String}
-        //  * @private
-        //  */
-        // AppKey: '',
+
         /**
          * url on which all axiom apis will be called
          * @type {String}
@@ -39,175 +23,19 @@ module.exports = function() {
          * @type {String}
          */
         UserID: null,
-        // /**
-        //  * If you want to show axiom's built in login window as popup if user is not already logged in any other session then set it true 
-        //  * @type {Boolean}
-        //  */
-        // showLoginPopupAutomatically: false,
-        // /**
-        //  * If you want to show axiom's built in login window as popup then set it true
-        //  * @type {Boolean}
-        //  */
-        // showLoginPopup: true,
         /**
          * access_token provided by axiom will be stored in this variable and then will be used in all other API calls automatically
          * @type {String}
          */
         access_token: '',
-        // /**
-        //  * when axiom is initialized then this will be set as true
-        //  * @type {Boolean}
-        //  * @private
-        //  */
-        // isInitialized: false,
-        // /**
-        //  * array of all functions which needs to be called once axiom is initialized.
-        //  * @type {Array}
-        //  * @private
-        //  */
-        // arrCBFunctions: [],
-        // /**
-        //  * log counter is used as sequece number for requests by this perticular connection
-        //  * @type {Number}
-        //  * @private
-        //  */
-        // logCounter: 0,
-        // /**
-        //  * callback functions which needs to be called by smartfilter when api returns result
-        //  * @type {Object}
-        //  * @private
-        //  */
-        // objSmartFilterCallbacks: {},
-        // /**
-        //  * register your function which needs to be called when axiom api is initialized
-        //  * @param  {Function} cbFunction callback function which will be called when axiom api module is initialized
-        //  * @return {Any}            this function returns nothing.
-        //  */
-        // onInitialized: function(cbFunction) {
-        //     if (AxiomAPIs.isInitialized) {
-        //         setTimeout(function() { cbFunction() }, 1);
-        //     } else {
-        //         AxiomAPIs.arrCBFunctions.push(cbFunction);
-        //     }
-        // },
-        // /**
-        //  * This function calls all function which were registed to be called on axiom api initialization is complete
-        //  * @return {Any} This function returns nothing
-        //  * @private
-        //  */
-        // initailize: function() {
-        //     AxiomAPIs.isInitialized = true;
-        //     if (AxiomAPIs.arrCBFunctions.length > 0) {
-        //         setTimeout(function() {
-        //             AxiomAPIs.arrCBFunctions.shift()();
-        //             AxiomAPIs.initailize();
-        //         }, 1);
-        //     }
-        // },
-        // /**
-        //  * Register your AppKey for given URL/domain to axiom apis
-        //  * @param  {String}   URL    Host where all axiom apis will be called.
-        //  * @param  {String}   AppKey AppKey provided by axiom
-        //  * @param  {Function} cb     callback function 
-        //  * @return {Any}          function returns nothing
-        //  * @private
-        //  */
-        // init: function(URL, AppKey, cb) {
-        //     jQuery.support.cors = true;
-        //     if (URL)
-        //         AxiomAPIs.URL = URL;
-        //     if (typeof AppKey === "function") {
-        //         cb = AppKey;
-        //         AppKey = AxiomAPIs.AppKey;
-        //     } else if (typeof AppKey === "undefined") {
-        //         AppKey = AxiomAPIs.AppKey;
-        //     } else if (typeof AppKey === "string") {
-        //         AxiomAPIs.AppKey = AppKey;
-        //     }
-        // },
-        // /**
-        //  * Encryption key for password encryption
-        //  * @type {String}
-        //  * @private
-        //  */
-        // rkEncryptionKey: CryptoJS.enc.Base64.parse('u/Gu5posvwDsXUnV5Zaq4g=='),
-        // /**
-        //  * Encryption Iv for password encryption
-        //  * @type {String}
-        //  * @private
-        //  */
-        // rkEncryptionIv: CryptoJS.enc.Base64.parse('5D9r9ZVzEYYgha93/aUK2w=='),
-        // /**
-        //  * encode plain text using CryptoJS
-        //  * @param  {String} plainText plain string as input
-        //  * @return {String}           encrypted string as output
-        //  * @private
-        //  */
-        // encrypt: function(plainText) {
-        //     var encrypted = CryptoJS.AES.encrypt(plainText, AxiomAPIs.rkEncryptionKey, { mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7, iv: AxiomAPIs.rkEncryptionIv });
-        //     return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
-        // },
-        // /**
-        //  * Decrypt encrypted text to plain text
-        //  * @param  {String} encryptrdText encrypted string as input
-        //  * @return {String}               plain string as output
-        //  * @private
-        //  */
-        // decrypt: function(encryptrdText) {
-        //     var decrypted = CryptoJS.AES.decrypt(encryptrdText, AxiomAPIs.rkEncryptionKey, { mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7, iv: AxiomAPIs.rkEncryptionIv });
-        //     return decrypted.toString(CryptoJS.enc.Utf8);
-        // },
-        // /**
-        //  * axiom login api which needs to be called for login in axiom system using OAuth2.0
-        //  * @param  {String}   username   Username
-        //  * @param  {String}   password   Password
-        //  * @param  {String}   captchaAns This one is an optional field. If you are asked captcha question along with login credential then you need to pass its answer in this field. You can pass null in other case. 
-        //  * @param  {Function} cb         callback function which needs to be called on return of login api.
-        //  * @return {Any}              This method returns nothing
-        //  */
-        // postLogin: function(username, password, captchaAns, cb) {
-        //     jQuery.support.cors = true;
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         if (captchaAns == undefined) {
-        //             captchaAns = "-84235";
-        //         }
-        //         return $.get(
-        //             AxiomAPIs.URL + '/user/login', { username: username, password: AxiomAPIs.encrypt(password), captchaAns: captchaAns },
-        //             function(result) {
-        //                 cb(result);
-        //             },
-        //             'jsonp');
-        //     }
-        // },
-        // /**
-        //  * call this function to logout from axiom system
-        //  * @param  {Function} cb callback function which will be called when user is logged out from system
-        //  * @return {Any}      this method returns nothing
-        //  */
-        // logout: function(cb) {
-        //     jQuery.support.cors = true;
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.get(
-        //             AxiomAPIs.URL + '/user/logout', {},
-        //             function(result) {
-        //                 cb(result);
-        //             },
-        //             'json');
-        //     }
-        // },
-        // /**
-        //  * built in method used to validate Session, AppKey and URL which is used by axiom apis internally
-        //  * @return {Object} Will return object having two fields. 
-        //  *                  1. Status (-1 means 'not correct' and 0 means 'correct') 
-        //  *                  2. message
-        //  * @private
-        //  */
+
+        /**
+         * built in method used to validate Session, AppKey and URL which is used by axiom apis internally
+         * @return {Object} Will return object having two fields. 
+         *                  1. Status (-1 means 'not correct' and 0 means 'correct') 
+         *                  2. message
+         * @private
+         */
         checkURL: function() {
             // jQuery.support.cors = true;
             if (AxiomAPIs.SessionID == '') {
@@ -219,191 +47,6 @@ module.exports = function() {
             }
             return { status: 0, message: 'Success' };
         },
-        // /**
-        //  * this method is used to check if user is already logged in to axiom system.
-        //  * @param  {Function} cb Callback needs to be called with result 
-        //  * @return {Any}      method returns nothing
-        //  */
-        // checkIsLogin: function(cb) {
-        //     AxiomAPIs.getAccessToken(function(data) {
-        //         if (data.access_token == undefined || data.access_token == "")
-        //             cb({ status: false });
-        //         else
-        //             cb({ status: true, access_token: data.access_token });
-        //     });
-        // },
-        // //        getClientAuthCode: function (clientID) {
-        // //            jQuery.support.cors = true;
-        // //            var valid = AxiomAPIs.checkURL();
-        // //            if (valid.status != 0) {
-        // //                cb(valid);
-        // //            }
-        // //            else {
-        // //                return $.get(
-        // //                    AxiomAPIs.URL + '/dialog/authorize',
-        // //                    { response_type: 'code', client_id: 'axiomPrivateAPI', redirect_uri: '/' },
-        // //                    function (result) {
-        // //                        //// // console.log(result);
-        // //                        return $.post(
-        // //                            AxiomAPIs.URL + '/dialog/authorize/decisionAutomatically',
-        // //                            { transaction_id: result.oauth2.transactionID },
-        // //                            function (result) {
-        // //                                //// // console.log(result);
-        // //                            },
-        // //                            'json');
-        // //                    },
-        // //                    'json');
-        // //            }
-        // //        },
-
-        // /**
-        //  * THis method gets the user's access token from the server, if the user is logged in,
-        //  * otherwise it returns a false status.
-        //  * @param  {Function} thiS a the Callback method tobe called after the getAccessToken is excecuted
-        //  */
-        // getAccessToken: function(cb) {
-        //     jQuery.support.cors = true;
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.get(
-        //             AxiomAPIs.URL + '/user/getClientCode', { client_id: AxiomAPIs.AppKey },
-        //             function(result) {
-        //                 if (result.status == 0) {
-        //                     AxiomAPIs.getAccessToken_inner(result.clientCode, result.clientID, result.secret, cb);
-        //                 } else {
-        //                     //// // console.log(result);
-        //                     if (result.status == -1) {
-        //                         if (result.message === "User not logged in") {
-        //                             if (AxiomAPIs.user != '' && AxiomAPIs.pass != '') {
-        //                                 AxiomAPIs.postLogin({ "username": AxiomAPIs.user, "password": AxiomAPIs.pass }, function(response) {
-        //                                     if (response.status == true) {
-        //                                         AxiomAPIs.getAccessToken(cb);
-        //                                     } else {
-        //                                         if (AxiomAPIs.showLoginPopup == true && AxiomAPIs.showLoginPopupAutomatically == true) {
-        //                                             AxiomAPIs.showLoginPopup = false;
-        //                                             AxiomAPIs.openLoginWindow(function() {
-        //                                                 AxiomAPIs.getAccessToken(function(response) {
-        //                                                     AxiomAPIs.showLoginPopup = true;
-        //                                                     cb(response);
-        //                                                 });
-        //                                             });
-        //                                         } else {
-        //                                             cb({ status: "false", message: "You are not logged in to axiom" });
-        //                                             //User has closed login popup without log in.
-        //                                         }
-        //                                     }
-        //                                 });
-        //                             } else {
-        //                                 //alert('Login Popup 1');
-        //                                 if (AxiomAPIs.showLoginPopup == true && AxiomAPIs.showLoginPopupAutomatically == true) {
-        //                                     AxiomAPIs.showLoginPopup = false;
-        //                                     AxiomAPIs.openLoginWindow(function() {
-        //                                         AxiomAPIs.getAccessToken(function(response) {
-        //                                             AxiomAPIs.showLoginPopup = true;
-        //                                             cb(response);
-        //                                         });
-        //                                     });
-        //                                 } else {
-        //                                     cb({ status: "false", message: "You are not logged in to axiom" });
-        //                                     //User has closed login popup without log in.
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             },
-        //             'jsonp');
-        //     }
-        // },
-        // /**
-        //  * This methods loads an HTML popup window via which the user logs into the app
-        //  * @param  {Function} cb thiS a the Callback method tobe called after the openLoginWindow is excecuted
-        //  * @private
-        //  */
-        // openLoginWindow: function(cb) {
-        //     jQuery.support.cors = true;
-        //     // event.preventDefault();
-        //     var left = (screen.width / 2) - (400 / 2);
-        //     var top = (screen.height / 2) - (350 / 2);
-
-        //     $('<div id="divAPILogin">').dialog({
-        //         modal: true,
-        //         open: function() {
-        //             $(this).load(AxiomAPIs.URL + "/widgets/axiomLogin/index.html", function() {
-        //                 commonLogin.onLoad();
-        //                 $('#divCommonLogin').keypress(function(e) {
-        //                     if (e.which == 13) {
-        //                         commonLogin.login(function(status) {
-        //                             if (status) {
-        //                                 $('#divAPILogin').dialog("close");
-        //                                 if (cb)
-        //                                     cb();
-        //                             }
-        //                         });
-        //                     }
-        //                 });
-        //                 $('#btnComLogin').bind('click', function() {
-        //                     commonLogin.login(function(status) {
-        //                         if (status) {
-        //                             $('#divAPILogin').dialog("close");
-        //                             if (cb)
-        //                                 cb();
-        //                         }
-        //                     });
-        //                 });
-        //             });
-        //         },
-        //         height: 320,
-        //         width: 400,
-        //         title: 'Axiom Login',
-        //         resizable: false
-        //     });
-        // },
-        // /**
-        //  * This method handles the status codes recieved from an https call
-        //  * @param  {object}   xhr        https object that contains information about the https call
-        //  * @param  {function}   parentF    The callng function of checkResponse
-        //  * @param  {Object}   parameters parameters passed to the https call
-        //  * @param  {Function} cb         This a the Callback method to be called after the checkResponse is excecuted
-        //  * @private
-        //  */
-        // checkResponse: function(xhr, parentF, parameters, cb) {
-        //     jQuery.support.cors = true;
-        //     if (xhr.status == 200) {
-        //         result = JSON.parse(xhr.responseText)
-        //             /****************************** same as $.ajaxSetup *************************/
-        //         if (result.reload) {
-        //             result = { status: 401, message: 'Unauthorized' };
-        //         } else if (result.myCurrentSessionInfo != undefined) {
-        //             if (result.myCurrentSessionInfo.OrgSessionID + "_" + result.myCurrentSessionInfo.currConnectionID + "_" + result.myCurrentSessionInfo.currentRandomNumber == myCurrentSessionInfo.OrgSessionID + "_" + myCurrentSessionInfo.currConnectionID + "_" + myCurrentSessionInfo.currentRandomNumber) {
-        //                 delete result.myCurrentSessionInfo;
-        //             } else {
-        //                 //location.href = location.href;
-        //                 result = { status: 401, message: 'Unauthorized' };
-        //             }
-        //         } else {
-        //             // cross domain result ( I guess)
-        //             //location.href = location.href;
-        //         }
-        //         /****************************** same as $.ajaxSetup *************************/
-        //         cb(result);
-        //     } else if (xhr.status == 401) {
-        //         AxiomAPIs.getAccessToken(function(response) {
-        //             //cb(response);
-        //             parentF(parameters, cb);
-        //         });
-        //     } else {
-        //         if (xhr.myCurrentSessionInfo != undefined) {
-        //             if (xhr.myCurrentSessionInfo.OrgSessionID + "_" + xhr.myCurrentSessionInfo.currConnectionID + "_" + xhr.myCurrentSessionInfo.currentRandomNumber == myCurrentSessionInfo.OrgSessionID + "_" + myCurrentSessionInfo.currConnectionID + "_" + myCurrentSessionInfo.currentRandomNumber) {
-        //                 delete xhr.myCurrentSessionInfo;
-        //             }
-        //         }
-        //         if (cb)
-        //             cb(xhr);
-        //     }
-        // },
 
         /**
          * This method handles the status codes recieved from call to commonAPIs
@@ -465,27 +108,6 @@ module.exports = function() {
          * @param  {Function} cb          This a the Callback method to be called after the commonAPICall is excecuted  
          * @private
          */
-
-        /*commonAPICall: function(moduleName, apiName, methodType, parameters, cb) {
-            var thisA = arguments;
-            // jQuery.support.cors = true;
-
-            var valid = AxiomAPIs.checkURL();
-            if (valid.status != 0) {
-                cb(valid);
-            } else if (!AxiomAPIs.access_token) {
-                return cb({ status: -1, message: 'access_token is not available' });
-            } else {
-                parameters.access_token = AxiomAPIs.access_token;
-                return https[methodType.toLowerCase()](
-                        AxiomAPIs.URL + '/apis/' + moduleName + '/' + apiName,
-                        parameters,
-                        'json')
-                    .always(function(myXHR) {
-                        AxiomAPIs.checkResponseCommonAPICall(myXHR, thisA.callee, moduleName, apiName, methodType, parameters, cb);
-                    });
-            }
-        },*/
         commonAPICall: function(moduleName, apiName, methodType, parameters, cb) {
             var thisA = arguments;
             // jQuery.support.cors = true;
@@ -523,7 +145,6 @@ module.exports = function() {
                 // console.log(options);
                 /*var req = https.request(options, function(error, response, body) {
                     if (error) throw new Error(error);
-
                     AxiomAPIs.checkResponseCommonAPICall(body, thisA.callee, moduleName, apiName, methodType, parameters, cb);
                 });*/
 
@@ -554,152 +175,7 @@ module.exports = function() {
             }
         },
 
-        // /**
-        //  * This function makes an https request to get the access token for the logged in user
-        //  * @param  {String}   clientCode Client code provided while sign up (for internal use)
-        //  * @param  {String}   clientID   Cliet ID provided at the time of signup (for internal use)
-        //  * @param  {String}   secret     The secret provided to the client to make a secure transaction
-        //  * @param  {Function} cb         This a the Callback method to be called after the commonAPICall is excecuted
-        //  * @private
-        //  */
-        // getAccessToken_inner: function(clientCode, clientID, secret, cb) {
-        //     jQuery.support.cors = true;
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.post(
-        //             AxiomAPIs.URL + '/user/oauth/token', { grant_type: 'authorization_code', code: clientCode, redirect_uri: '/', client_id: clientID, client_secret: secret },
-        //             function(result) {
-        //                 AxiomAPIs.access_token = result.access_token;
-        //                 cb(result);
-        //             },
-        //             'json');
-        //     }
-        // },
-        // /**
-        //  * This method gives the information about the logged in user. If not user is logged in it
-        //  * returns a false status with message user not authenticated.
-        //  * @param  {Function} cb         thiS a the Callback method tobe called after the userinfo is executed
-        //  */
-        // userinfo: function(cb) {
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.get(
-        //                 AxiomAPIs.URL + '/user/info', { access_token: AxiomAPIs.access_token, params: {} },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 AxiomAPIs.checkResponse(myXHR, thisA.callee, {}, cb);
-        //             });
-        //     }
-        // },
-        // /**
-        //  * This method adds new user to the application.
-        //  * @param  {String}   firstname User's firstname
-        //  * @param  {String}   email     A unique email that isn't already used by an existing user
-        //  * @param  {String}   password  user's password
-        //  * @param  {Function} cb        thiS a the Callback method tobe called after the userSignup is executed
-        //  */
-        // userSignup: function(firstname, email, password, cb) {
-        //     var parameters = {
-        //         firstname: firstname,
-        //         email: email,
-        //         password: password
-        //     }
-        //     AxiomAPIs.commonAPICall('user', 'signup', 'post', parameters, cb);
-        // },
-        // /**
-        //  * This method initiates the process of password reset for valid emails provided.
-        //  * @param  {String}   email email of the user.
-        //  * @param  {Function} cb    this a the Callback method tobe called after the forgotPassword is executed
-        //  */
-        // forgotPassword: function(email, cb) {
-        //     parameters.AppendText = AxiomAPIs.encrypt(email);
-        //     parameters.URL = document.URL.substr(0, document.URL.indexOf('/', 8))
-        //     parameters.captchaAns = "";
-        //     AxiomAPIs.commonAPICall('user', 'forgotPassword', 'post', parameters, cb);
-        // },
-
-        // /**
-        //  * Gets a list of tables under a project
-        //  * @param  {object}   parameters API data
-        //  * @param  {Function} cb         callback mehtod       
-        //  * @private
-        //  * @deprecated 
-        //  */
-        // table: function(parameters, cb) {
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.post(
-        //                 AxiomAPIs.URL + '/api/table', { access_token: AxiomAPIs.access_token, params: parameters },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, cb);
-        //             });
-        //         //}
-        //     }
-        // },
-
-        // /**
-        //  * Frontend module to fetch a CSV and download it to the users PC
-        //  * @param  {Object}   parameters API data
-        //  * @param  {Function} cb         Callback method
-        //  * @private
-        //  */
-        // writeToFile: function(parameters, cb) {
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         var xhr = new XMLHttpRequest();
-        //         xhr.addEventListener("error", transferFailed, false);
-        //         xhr.addEventListener("abort", transferCanceled, false);
-        //         xhr.onreadystatechange = function() {
-        //             if (xhr.readyState == 4) {
-        //                 // // console.log("Data Save Done", xhr.responseText);
-        //                 var response = JSON.parse(xhr.responseText);
-        //                 if (cb) {
-        //                     cb();
-        //                 }
-        //                 dwindow = window.open(AxiomAPIs.URL + "/downloadDataFile/" + response.content.fileName + "/" + encodeURIComponent(parameters.fileName), "_blank");
-        //             }
-        //         };
-        //         xhr.open("POST", AxiomAPIs.URL + '/api/downloadData', true);
-        //         xhr.send(JSON.stringify(parameters.data));
-
-        //     }
-
-        //     function transferComplete(evt) {
-        //         var msg = ("The transfer is complete.");
-        //         // // console.log(msg, evt);
-        //     }
-
-        //     function transferFailed(evt) {
-        //         var msg = ("An error occurred while transferring the file.");
-        //         // // console.log(msg, evt);
-        //         alert(msg);
-        //     }
-
-        //     function transferCanceled(evt) {
-        //         var msg = ("The transfer has been canceled by the user.");
-        //         // // console.log(msg, evt);
-        //         alert(msg);
-        //     }
-        // },
-
+       
 
         /**
          * This all the projects for the current user. It includes the the projects associated
@@ -1254,92 +730,7 @@ module.exports = function() {
             AxiomAPIs.commonAPICall('user', 'getNotificationList', 'post', parameters, cb);
         },
 
-        // /**
-        //  * This API documents the amount of time an user actually spent on the web page.
-        //  * @param  {Object}   parameters  Internal parameters passed by the parent method
-        //  * @param  {Function} cb          Callback method
-        //  * @private
-        //  * @deprecated 
-        //  */
-        // axiomTimerLog: function(parameters, cb) {
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.post(
-        //                 AxiomAPIs.URL + '/api/axiomLog', { access_token: AxiomAPIs.access_token, params: parameters },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, cb);
-        //             });
-        //     }
-        // },
-
-        // /**
-        //  * Logs the users activity on the page and keeps sending it to the backend periodically
-        //  * @param  {Object}   parameters Internal parameters passed by the parent method
-        //  * @param  {Function} cb         Callback method
-        //  * @private
-        //  * @deprecated 
-        //  */
-        // axiomLog: function(parameters, cb) {
-        //     AxiomAPIs.logCounter++;
-        //     var tempURL = "";
-        //     if (location.href.indexOf("#") != -1)
-        //         tempURL = location.href.split('#')[0];
-        //     else
-        //         tempURL = location.href;
-
-        //     // // console.log(tempURL);
-
-        //     parameters.UID = tempURL;
-        //     parameters.connectionID = myCurrentSessionInfo.currConnectionID;
-        //     parameters.sessionID = myCurrentSessionInfo.currSessionID;
-        //     parameters.reqCnt = AxiomAPIs.logCounter;
-
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.post(
-        //                 AxiomAPIs.URL + '/api/axiomLog', { access_token: AxiomAPIs.access_token, params: parameters },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, cb);
-        //             });
-        //     }
-        // },
-
-        // /**
-        //  * Get updates for the current user
-        //  * @param  {Object}   parameters 
-        //  * @param  {Function} cb         
-        //  * @private
-        //  * @deprecated
-        //  */
-        // notification: function(parameters, cb) {
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.post(
-        //                 AxiomAPIs.URL + '/api/notification', { access_token: AxiomAPIs.access_token, params: parameters },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, cb);
-        //             });
-        //     }
-        // },
-
+       
         /**
          * List all the tables added to a project by the current user
          * @param  {Number}   projectID Project ID
@@ -1588,14 +979,6 @@ module.exports = function() {
             AxiomAPIs.commonAPICall('table', 'getCellHistory', 'get', parameters, cb);
         },
 
-        /*getUserRightsTable: function(parameters, cb) {
-            AxiomAPIs.commonAPICall('table', 'getUserRightsTable', 'get', parameters, cb);
-        },
-
-        updateUserRightsTable: function(parameters, cb) {
-            AxiomAPIs.commonAPICall('table', 'updateUserRightsTable', 'post', parameters, cb);
-        },*/
-
 
         /**
          * Save table structure and date of a view.If view doesn't exist a new one will be created
@@ -1677,177 +1060,7 @@ module.exports = function() {
                     xhr.send(JSON.stringify(parameters));
                 }
             }
-            // ,
-            /**
-             * 
-             * @private
-             * @deprecated 
-             */
-            // widget: function(parameters, cb) {
-            //     var thisA = arguments;
-            //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         return $.post(
-        //                 AxiomAPIs.URL + '/api/widget', { access_token: AxiomAPIs.access_token, params: parameters },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, cb);
-        //             });
-        //     }
-        // },
-        // /**
-        //  * List of requests to be made via smartfilter to remote data source
-        //  * @type {Object}
-        //  * @private
-        //  */
-        // smartFilterRequests: {},
-        // /**
-        //  * The https request to be made to the smart filter 
-        //  * @param  {Object}   parameters       Information required by the smartFilter to obtain data
-        //  * @param  {Function} cb               Callback Method
-        //  * @param  {Function} addPivotCallback Incase the filter request is to add a pivot to data,
-        //  *                                       a callback can be separately provided to be called after 
-        //  *                                       a pivot is created 
-        //  * @private
-        //  */
-        // smartFilter: function(parameters, cb, addPivotCallback) {
-
-        //     var thisA = arguments;
-        //     jQuery.support.cors = true;
-
-        //     var valid = AxiomAPIs.checkURL();
-        //     if (valid.status != 0) {
-        //         cb(valid);
-        //     } else {
-        //         if (parameters.action.toString().toLowerCase() == 'pivot') {
-        //             AxiomAPIs.objSmartFilterCallbacks[parameters.reference + "_" + parameters.data.reference] = cb;
-        //         }
-        //         if (AxiomAPIs.smartFilterRequests[parameters.reference] == undefined) {
-        //             AxiomAPIs.smartFilterRequests[parameters.reference] = [];
-        //         }
-
-        //         if (parameters.action.toLowerCase() == 'staticfilter' || parameters.action == 'filter') {
-        //             for (var i = AxiomAPIs.smartFilterRequests[parameters.reference].length - 1; i >= 0; i--) {
-        //                 try {
-        //                     AxiomAPIs.smartFilterRequests[parameters.reference][i].abort();
-        //                 } catch (ex) {}
-        //             }
-        //             AxiomAPIs.smartFilterRequests[parameters.reference] = null;
-        //             AxiomAPIs.smartFilterRequests[parameters.reference] = [];
-        //         }
-
-        //         var ajaxRequest = $.post(
-        //                 AxiomAPIs.URL + '/api/smartFilter', { access_token: AxiomAPIs.access_token, params: parameters },
-        //                 'json')
-        //             .always(function(myXHR) {
-        //                 if (typeof myXHR.content.result.data == 'object') {
-        //                     AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, function() {
-        //                         // debugger;
-        //                         if (myXHR.content.result.type.toLowerCase() == 'data') {
-        //                             var keys = Object.keys(myXHR.content.result.data);
-        //                             for (var i = 0; i < keys.length; i++) {
-        //                                 if (AxiomAPIs.objSmartFilterCallbacks.hasOwnProperty(parameters.reference + "_" + keys[i])) {
-        //                                     try {
-        //                                         var responseData = {};
-        //                                         responseData.status = myXHR.status;
-        //                                         responseData.data = myXHR.content.result.data[keys[i]];
-        //                                         responseData.reference = keys[i];
-        //                                         AxiomAPIs.objSmartFilterCallbacks[parameters.reference + "_" + keys[i]](responseData);
-        //                                     } catch (ex) {
-        //                                         // // console.log(ex);
-        //                                     }
-        //                                 }
-        //                             }
-        //                         } else if (myXHR.content.result.type.toLowerCase() == 'records') {
-        //                             if (cb) cb(myXHR.content.result.data);
-        //                         } else if (myXHR.content.result.type.toLowerCase() == 'error') {
-        //                             // // console.log(myXHR);
-        //                         }
-
-
-        //                         if (parameters.action.toLowerCase() == 'staticfilter') {
-        //                             if (cb) cb();
-        //                         } else if (parameters.action.toLowerCase() == 'filter') {
-        //                             if (cb) cb();
-        //                         } else if (parameters.action.toLowerCase() == 'removepivot') {
-        //                             if (cb) cb();
-        //                         } else if (parameters.action.toLowerCase() == 'pivot') {
-        //                             if (addPivotCallback) addPivotCallback();
-        //                         }
-
-        //                     });
-        //                 } else {
-        //                     AxiomAPIs.checkResponse(myXHR, thisA.callee, parameters, cb);
-        //                 }
-        //             });
-        //         //}
-        //         AxiomAPIs.smartFilterRequests[parameters.reference].push(ajaxRequest);
-        //         return ajaxRequest;
-        //     }
-        // },
-
-        //     /**
-        //      * Socket stack to continiously post user activity to the server and handle unexpected webpage termination
-        //      * @type {Array}
-        //      * @private
-        //      */
-        //     bindUnbindStack: [],
-        //     /**
-        //      * An update from the backend for syncing data processed by the server 
-        //      * @param  {Function} cb Callback method
-        //      * @private
-        //      */
-        //     bindUpdateEvent: function(cb) {
-        //         activeConnectionStack_socket.on('bindUpdateTrigger', function(data) {
-        //             if (cb)
-        //                 cb(data);
-        //         });
-        //     },
-        //     /**
-        //      * To push an update of activities to the server
-        //      * @param  {Object} data  Logs sent internally to the server 
-        //      * @private
-        //      */
-        //     bindUpdate: function(data) {
-        //         if (data && typeof data.type === 'string' && data.ids && data.ids.length > 0) {
-        //             AxiomAPIs.bindUnbindStack.push({ type: 'bind', data: data });
-        //             activeConnectionStack_socket.emit('bindUpdate', data);
-        //         }
-        //     },
-
-        //     *
-        //      * An emit with a list of stream IDs to drop the list of streams
-        //      * @param  {Object} data Logs sent internally to the server 
-        //      * @private
-
-        //     unbindUpdate: function(data) {
-        //         if (data && typeof data.type === 'string' && data.ids && data.ids.length > 0) {
-        //             AxiomAPIs.bindUnbindStack.push({ type: 'unbind', data: data });
-        //             activeConnectionStack_socket.emit('unbindUpdate', data);
-        //         }
-        //     },
-        //     /**
-        //      * For each stream in the bindUnbindStack emit the either 'bind' or 'unbind' depending 
-        //      * on the type of the data
-        //      * @private
-        //      */
-        //     executeBindUnbindStack: function() {
-        //         for (var i = 0; i < AxiomAPIs.bindUnbindStack.length; i++) {
-        //             if (AxiomAPIs.bindUnbindStack[i].type === 'bind') {
-        //                 activeConnectionStack_socket.emit('bindUpdate', AxiomAPIs.bindUnbindStack[i].data);
-        //             } else {
-        //                 activeConnectionStack_socket.emit('unbindUpdate', AxiomAPIs.bindUnbindStack[i].data);
-        //             }
-        //         }
-        //     },
-        // }
-
-        
+       
     };
     return AxiomAPIs;
 };
-// module.exports = AxiomAPIs;
